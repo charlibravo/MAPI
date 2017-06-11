@@ -56,15 +56,9 @@
                 <tr>
                     <th>Email</th>
                     <th>Password</th>
-
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                   
-
-                </tr>
-
+            <tbody id="my-tbl-tr">
             </tbody>
         </table>
     </div>
@@ -74,53 +68,54 @@
 <script lang="ja" type="text/javascript">
     $(document).ready(function () {
         $("#Save").click(function () {
+
             var e = $("#e").val();
             var p = $("#pwd").val();
-            alert(e);
-            alert(p);
+            //alert(e);
+            //alert(p);
             $.ajax({
-                url: "http://localhost:1848/api/EWalletapi",
+                url: "/api/EWalletapi",
                 type: "Post",
                 data: JSON.stringify({ Email: e, Password: p }),
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) { },
-                //  error: function () { alert('error');}
+                error: function (msg) { alert('error');}
             });
         });
     });
 $(document).ready(function () {
 
     // code to read selected table row cell data (values).
-    $("#All").on('click', '#All', function () {
+    $(document).on('click', '#All', function (e) {
+        debugger;
         $("#EWallet").hide();
         // get the current row
         var currentRow = $(this).closest("tr");
         var id = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+        $('#my-tbl-tr').empty();
         var data = id;+
         $.ajax({
             type: 'GET',
-            url: "http://localhost:1848//api/ewalletapi" + data,
+            url: "/api/ewalletapi" + data,
             dataType: 'json',
-            success: function (data) {
-                console.log(data);
-                var str = "";
-                str += "<form action='#' method='post'>";
-                str += "<input type='email' id='e' value='" + data.Email + "'/>"
-                str += "<input type='password' id='pwd' value='" + data.Password + "'/>"
-                str += "<input type='button' onclick='All' value='change' />"
-                str += "</form>";
-                $('#zaidi').html(str);
+            success: function (response) {
+                for (i = 0; i < response.length; i++) {
+                    var str = "<tr><td>" + response[i].Email + "</td>" + "<td>" + response[i].Password + "</td></tr>";
+                    $("#my-tbl-tr").append(str);
+                }
             },
-            error: function (msg) { alert(msg); }
-
-
+            error: function (msg) { console.log(msg); alert("Error");}
         });
+        e.preventDefault();
     });
+
+
+
+
+
+
 });
-
-
-
-    </script>
+</script>
 
 
 

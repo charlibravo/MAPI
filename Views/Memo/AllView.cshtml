@@ -27,38 +27,216 @@
     <div class="container">
         <div class="row">
             <div class="form-group">
-                <textarea class="form-control" id="Textarea" rows="12"></textarea>
-                <a href="" class="btn btn-transparent">Update</a>
-                <a href="og-grid" class="btn btn-transparent">DELETE</a>
+                <textarea class="form-control" id="Textarea1" rows="12"></textarea>
+                <a href="" id="update1" class="btn btn-transparent">Update</a>
+                <input type="hidden" id="id1" />
+                <a href="og-grid" id="delete1" class="btn btn-transparent">DELETE</a>
 
             </div>
             <div class="form-group">
 
-                <textarea class="form-control" id="Textarea" rows="12"></textarea>
-                <a href="" class="btn btn-transparent">Update</a>
-                <a href="og-grid" class="btn btn-transparent">DELETE</a>
+                <textarea class="form-control" id="Textarea2" rows="12"></textarea>
+                <a href="" id="update2" class="btn btn-transparent">Update</a>
+                <input type="hidden" id="id2" />
+                <a href="og-grid" id="delete2" class="btn btn-transparent">DELETE</a>
 
             </div>
             <div class="form-group">
 
-                <textarea class="form-control" id="Textarea" rows="12"></textarea>
-                <a href="" class="btn btn-transparent">Update</a>
-                <a href="og-grid" class="btn btn-transparent">DELETE</a>
+                <textarea class="form-control" id="Textarea3" rows="12"></textarea>
+                <a href="" id="update3" class="btn btn-transparent">Update</a>
+                <input type="hidden" id="id3" />
+                <a href="og-grid" id="delete3" class="btn btn-transparent">DELETE</a>
 
             </div>
             <center>
                 <nav class="post-pagination wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                     <ul>
-                        <li class="disabled"><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">&raquo;</a></li>
+                        <li class="disabled" id="btn0"><a href="#">&laquo;</a></li>
+                        <li class="active"><a id="btn1"href="#">1</a></li>
+                        <li><a id="btn2" href="#">2</a></li>
+                        <li><a id="btn3" href="#">3</a></li>
+                        <li><a id="btn4" href="#">4</a></li>
+                        <li><a id="btn5" href="#">&raquo;</a></li>
                     </ul>
                 </nav>
             </center>
         </div>
     </div>
 </section>
+
+
+<script lang="ja" type="text/javascript">
+
+
+    
+    $(document).ready(function () {
+        var i = 0;
+        var total = 0;
+
+        $("#btn1").click(function (e) {
+            i = ($("#btn1").text() - 1) * 3;
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+        $("#btn2").click(function (e) {
+            i = $("#btn1").text() * 3;
+            alert(i);
+            debugger;
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+
+        $("#btn3").click(function (e) {
+            i = $("#btn2").text() * 3;
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+        $("#btn4").click(function (e) {
+            i = $("#btn2").text() * 3;
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+        $("#btn5").click(function (e) {
+            var x = $("#btn3").text();
+            $("#btn1").text(++x);
+            $("#btn2").text(++x);
+            $("#btn3").text(++x);
+            $("#btn4").text(++x);
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+        $("#btn0").click(function (e) {
+            var x = $("#btn1").text();
+            if (x > 1) {
+                $("#btn4").text(--x);
+                $("#btn3").text(--x);
+                $("#btn2").text(--x);
+                $("#btn1").text(--x);
+            }
+            if (total > i) {
+                myfunc();
+            }
+            e.preventDefault();
+        });
+        
+
+        function myfunc() {
+            
+
+            $.ajax({
+                type: 'GET',
+                url: "/api/MEMoApi" ,
+                dataType: 'json',
+                success: function (response) {
+                    debugger;
+                    total = response.length;
+                    if (total > i) {
+                        $("#id1").val(response[i].Id);
+                        $("#Textarea1").text(response[i++].memo1);
+                    }
+                    if (total > i) {
+                        $("#id2").val(response[i].Id);
+                        $("#Textarea2").text(response[i++].memo1);
+                    }
+                    if (total > i) {
+                        $("#id3").val(response[i].Id);
+                        $("#Textarea3").text(response[i++].memo1);
+                    }
+                    
+                },
+                error: function (msg) { console.log(msg); alert("Error"); }
+                
+            });
+     
+        }
+        
+        myfunc();
+    
+
+
+        $('#update1, #update2, #update3').click(function (e) {
+            var btn = e.target.id;
+            alert(btn);
+            var id = $("#id1").val() ;
+            if (btn == 'update2')
+            {
+                id = $("#id2").val();
+                Text = $("#Textarea2").val();
+            }
+            if (btn == 'update3')
+            {
+                id = $("#id3").val();
+                Text = $("#Textarea3").val();
+            }
+            
+
+        
+        // alert(Text);
+        debugger;
+        
+        $.ajax({
+              
+
+            url: "/api/MEMoapi/"+id,
+            type: "Put",
+            data: JSON.stringify({ memo1: Text }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) { alert("done");},
+            error: function () { alert('error');}
+        });
+  
+        e.preventDefault();
+    });
+
+
+
+        $('#delete1, #delete2, #delete3').click(function (e) {
+            var btn = e.target.id;
+            alert(btn);
+            var id = $("#id1").val();
+            if (btn == 'delete2') {
+                id = $("#id2").val();
+            }
+            if (btn == 'delete3') {
+                id = $("#id3").val();
+            }
+
+
+
+            // alert(Text);
+            debugger;
+
+            $.ajax({
+
+
+                url: "/api/MEMoapi/" + id,
+                type: "Delete",
+                //data: JSON.stringify({ memo1: Text }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    i = i - 3;
+                    myfunc();
+                },
+                error: function () { alert('error'); }
+            });
+
+            e.preventDefault();
+        });
+
+
+
+
+});
+</script>
 

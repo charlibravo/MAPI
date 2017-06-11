@@ -157,7 +157,7 @@
             alert(U);
             alert(E);
             $.ajax({
-                url: "http://localhost:1848/api/formapi",
+                url: "/api/formapi",
                 type: "Post",
                 data: JSON.stringify({ Fullname: F, Password: P, Username: U, Email: E }),
                 contentType: 'application/json; charset=utf-8',
@@ -180,7 +180,7 @@
             var data = id; +
             $.ajax({
                 type: 'GET',
-                url: "http://localhost:1848/api/formapi/" + data,
+                url: "/api/formapi/" + data,
                 dataType: 'json',
                 success: function (data) {
                     console.log(data);

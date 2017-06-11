@@ -83,8 +83,6 @@
         });
         $("#btn2").click(function (e) {
             i = $("#btn1").text() * 3;
-            alert(i);
-            debugger;
             if (total > i) {
                 myfunc();
             }
@@ -139,7 +137,6 @@
                 url: "/api/MEMoApi" ,
                 dataType: 'json',
                 success: function (response) {
-                    debugger;
                     total = response.length;
                     if (total > i) {
                         $("#id1").val(response[i].Id);
@@ -167,7 +164,6 @@
 
         $('#update1, #update2, #update3').click(function (e) {
             var btn = e.target.id;
-            alert(btn);
             var id = $("#id1").val() ;
             if (btn == 'update2')
             {
@@ -179,12 +175,7 @@
                 id = $("#id3").val();
                 Text = $("#Textarea3").val();
             }
-            
 
-        
-        // alert(Text);
-        debugger;
-        
         $.ajax({
               
 
@@ -192,7 +183,7 @@
             type: "Put",
             data: JSON.stringify({ memo1: Text }),
             contentType: 'application/json; charset=utf-8',
-            success: function (data) { alert("done");},
+            success: function (data) { },
             error: function () { alert('error');}
         });
   
@@ -203,7 +194,6 @@
 
         $('#delete1, #delete2, #delete3').click(function (e) {
             var btn = e.target.id;
-            alert(btn);
             var id = $("#id1").val();
             if (btn == 'delete2') {
                 id = $("#id2").val();
@@ -211,11 +201,6 @@
             if (btn == 'delete3') {
                 id = $("#id3").val();
             }
-
-
-
-            // alert(Text);
-            debugger;
 
             $.ajax({
 

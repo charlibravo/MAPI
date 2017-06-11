@@ -71,8 +71,6 @@
 
             var e = $("#e").val();
             var p = $("#pwd").val();
-            //alert(e);
-            //alert(p);
             $.ajax({
                 url: "/api/EWalletapi",
                 type: "Post",
@@ -87,9 +85,7 @@ $(document).ready(function () {
 
     // code to read selected table row cell data (values).
     $(document).on('click', '#All', function (e) {
-        debugger;
         $("#EWallet").hide();
-        // get the current row
         var currentRow = $(this).closest("tr");
         var id = currentRow.find("td:eq(0)").text(); // get current row 1st TD value
         $('#my-tbl-tr').empty();
@@ -108,11 +104,6 @@ $(document).ready(function () {
         });
         e.preventDefault();
     });
-
-
-
-
-
 
 });
 </script>

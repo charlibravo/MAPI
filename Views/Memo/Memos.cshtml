@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Memos";
+    Layout = "~/Views/Sheared/_LayoutPage1.cshtml";
+}
+
+<section id="about" class="bg-one">
+    <div class="container">
+        <div class="row">
+            <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                <h2>Write <span class="color">Memo</span></h2>
+                <div class="border">
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <textarea class="form-control" id="Text" placeholder="Create your own Memo" rows="12"></textarea>
+                <input class="form-control" type='hidden' name="text">
+            </div>
+
+            <div class="pull-right">
+                <a class="btn btn-transparent" href="/Memo/AllView">View All</a>
+                <a href="" class="btn btn-transparent" id="save">Save</a>
+                <a href="" class="btn btn-transparent">Update</a>
+                <a href="og-grid" class="btn btn-transparent">DELETE</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script lang="ja" type="text/javascript">
+    $(document).ready(function () {
+        $("#save").click(function () {
+            var Text = $("#Text").val();
+            alert(Text);
+            $.ajax({
+
+
+                url: "http://localhost:1848/api/MEMoapi",
+                type: "Post",
+                data: JSON.stringify({ memo1: Text }),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) { },
+                //  error: function () { alert('error');}
+            });
+        });
+    });
+
+
+</script>
+
